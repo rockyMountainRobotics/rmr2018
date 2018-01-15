@@ -18,6 +18,7 @@ public class WinchManip implements Component
 	@Override
 	public void update() 
 	{
+		//Set the liftWinchSet variable according to how far the joystick is pushed
 		double speed = manipController.getRawAxis(1);
 		liftWinchSet.set(speed);
 		
