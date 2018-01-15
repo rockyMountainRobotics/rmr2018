@@ -1,7 +1,10 @@
 package org.usfirst.frc.team662.robot;
 
-//Import code for Xbox Controller, limit switches
+//Import code for Xbox Controller, limit switches, and talons
 import edu.wpi.first.wpilibj.XboxController;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class BoxManip implements Component 
@@ -15,6 +18,9 @@ public class BoxManip implements Component
 	//Having two lets us use them as multiples of each other
 	final static double SPEED = .25;
 	double speed = 0;
+	
+	//Create the TalonSRX for the manipulator
+	WPI_TalonSRX manipMotor = new WPI_TalonSRX(RobotMap.ARM);
 	
 	//Create limit switches
 	public DigitalInput limitSwitchTop = new DigitalInput(RobotMap.LIMIT_TOP);
@@ -100,6 +106,9 @@ public class BoxManip implements Component
 				isTraveling = false;
 			}
 		}
+		
+		//Sets the speed of the motor
+		manipMotor.set(speed);
 	}
 	
 	public void autoUpdate()
