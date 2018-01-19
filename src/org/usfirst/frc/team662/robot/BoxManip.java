@@ -13,14 +13,16 @@ public class BoxManip implements Component
 	final static int TOP = 1;
 	final static int MIDDLE = 0;
 	final static int BOTTOM = -1;
-	
+	final double LEFT_DEADZONE = .15;
+	final double RIGHT_DEADZONE = .15;	
 	//Create a final static double variable for speed and a double variable, also for speed
 	//Having two lets us use them as multiples of each other
 	final static double SPEED = .25;
 	double speed = 0;
 	
 	//Create the TalonSRX for the manipulator
-	WPI_TalonSRX manipMotor = new WPI_TalonSRX(RobotMap.ARM);
+	WPI_TalonSRX manipMotor = new WPI_TalonSRX(RobotMap.CHAIN);
+	WPI_TalonSRX arm = new WPI_TalonSRX(RobotMap.ARM);
 	
 	//Create limit switches
 	public DigitalInput limitSwitchTop = new DigitalInput(RobotMap.LIMIT_TOP);
@@ -43,6 +45,8 @@ public class BoxManip implements Component
 		boolean topLimit = !limitSwitchTop.get();
 		boolean middleLimit = !limitSwitchMiddle.get();
 		boolean bottomLimit = !limitSwitchBottom.get();
+		
+		double armSpeed = manipController.getRawAxis(5);
 		
 //MOVE ARMS ACCORDINGLY WHEN X, Y, OR A BUTTONS ARE PRESSED.		
 		//When the "Y" button is pressed and the arms aren't currently moving, move them to top.
@@ -105,6 +109,12 @@ public class BoxManip implements Component
 				speed = 0;
 				isTraveling = false;
 			}
+		}
+		
+		// Check for the input in the right Joystick
+		
+		if (Math.abs(armSpeed) > RIGHT_DEADZONE) {
+			arm.set(armSpeed);
 		}
 		
 		//Sets the speed of the motor

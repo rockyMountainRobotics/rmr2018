@@ -12,4 +12,5 @@ public class RobotMap {
 	public final static int LIMIT_TOP = 1;
 	public final static int LIMIT_MIDDLE = 2;
 	public final static int LIMIT_BOTTOM = 3;
+	
 }

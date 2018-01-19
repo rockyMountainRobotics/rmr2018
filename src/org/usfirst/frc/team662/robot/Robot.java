@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-package org.usfirst.frc.team662.robot;
-
-public class Robot
-{
-	
-=======
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package org.usfirst.frc.team662.robot;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -21,14 +7,9 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DriverStation;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.properties file in the
- * project.
- */
 public class Robot extends IterativeRobot {
     
     WPI_TalonSRX leftFront;
@@ -43,15 +24,18 @@ public class Robot extends IterativeRobot {
 
     XboxController xboxController;
 
+    String side;
 	@Override
-	public void robotInit() {
-		leftFront = new WPI_TalonSRX(LEFT_FRONT);
-        leftBack = new WPI_TalonSRX(LEFT_BACK);
-        rightFront = new WPI_TalonSRX(RIGHT_FRONT);
-        rightBack = new WPI_TalonSRX(RIGHT_BACK);
+	public void robotInit() 
+	{
+		side = DriverStation.getInstance().getGameSpecificMessage();
+		leftFront = new WPI_TalonSRX(RobotMap.LEFT_FRONT_MOTOR);
+		leftBack = new WPI_TalonSRX(RobotMap.LEFT_BACK_MOTOR);
+        rightFront = new WPI_TalonSRX(RobotMap.RIGHT_FRONT_MOTOR);
+        rightBack = new WPI_TalonSRX(RobotMap.RIGHT_BACK_MOTOR);
 
-        rightFront.setInverted(true);
-        rightBack.setInverted(true);
+        leftFront.setInverted(true);
+        leftBack.setInverted(true);
         
         leftDrive = new SpeedControllerGroup(leftFront, leftBack);
         rightDrive = new SpeedControllerGroup(rightFront, rightBack);
@@ -64,12 +48,39 @@ public class Robot extends IterativeRobot {
 	public void teleopInt() {}
 	
 	@Override
-	public void teleopPeriodic() {
-		if (isOperatorControl() && isEnabled()) {
+	public void teleopPeriodic() 
+	{
+		if (isOperatorControl() && isEnabled()) 
+		{
+			//char[] positions;
+			
+			//positions = side.toCharArray();
+			
+			//positions[0] = 'l';
+			
+			//SmartDashboard.putString("GAME_SIDE", Character.toString(positions[0]));
+			
+			
 			//differentialDriv;
 			differentialDrive.arcadeDrive(xboxController.getY(GenericHID.Hand.kLeft), -xboxController.getX(GenericHID.Hand.kLeft));
 			
+			char in = GameData.GetSide();
+			
+			if(in == 'L')
+			{
+				leftFront.set(.5);
+				leftBack.set(.5);
+				//Used for testing
+				SmartDashboard.putString("hi", "hi");
+			}
+			else 
+			{
+				rightFront.set(.5);
+				rightBack.set(.5);
+			}
+			
+			
 		}
 	}
->>>>>>> f28870b477370d904fce8f985c667c5786144793
+
 }
