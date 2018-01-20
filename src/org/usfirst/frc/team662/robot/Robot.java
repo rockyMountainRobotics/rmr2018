@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 
 public class Robot extends IterativeRobot {
     
+	final double MULTIPLIER = .6;
     WPI_TalonSRX leftFront;
     WPI_TalonSRX leftBack;
     WPI_TalonSRX rightFront;
@@ -62,11 +63,11 @@ public class Robot extends IterativeRobot {
 			
 			
 			//differentialDriv;
-			differentialDrive.arcadeDrive(xboxController.getY(GenericHID.Hand.kLeft), -xboxController.getX(GenericHID.Hand.kLeft));
+			differentialDrive.arcadeDrive(MULTIPLIER *(xboxController.getY(GenericHID.Hand.kLeft)), MULTIPLIER*( -xboxController.getX(GenericHID.Hand.kLeft)));
 			
-			char in = GameData.GetSide();
+			//char in = GameData.GetSide();
 			
-			if(in == 'L')
+			/*if(in == 'L')
 			{
 				leftFront.set(.5);
 				leftBack.set(.5);
@@ -79,8 +80,32 @@ public class Robot extends IterativeRobot {
 				rightBack.set(.5);
 			}
 			
-			
+			*/
 		}
+	}
+	
+	public void autonomousPeriodic() 
+	{
+		// originally copied from 2018 game data java code
+		
+		String gameData;
+		
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		
+		if (gameData.charAt(0) == 'L')
+		{
+			// left motors
+			leftFront.set(.5);
+			leftBack.set(.5);
+		} 
+		
+		else 
+		{
+			// right motors
+			rightFront.set(.5);
+			rightBack.set(.5);
+		}
+		
 	}
 
 }
