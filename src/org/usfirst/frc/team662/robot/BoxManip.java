@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 
 public class BoxManip implements Component 
 {
-	//Create states for top, middle, and bottom (for arms)
+	//Create states for top, middle, and bottom (for arms) 
 	final static int TOP = 1;
 	final static int MIDDLE = 0;
 	final static int BOTTOM = -1;
