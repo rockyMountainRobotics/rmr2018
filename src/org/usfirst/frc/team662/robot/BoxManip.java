@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Solenoid;
 
 public class BoxManip implements Component 
 {
@@ -21,11 +20,8 @@ public class BoxManip implements Component
 	final static double SPEED = .25;
 	double speed = 0;
 	
-	//Creates solenoid for arm grabbers.
-	Solenoid armSolenoid = new Solenoid(RobotMap.SOLENOID_PORT); //FIX
-	
 	//Create the TalonSRX for the manipulator
-	WPI_TalonSRX chainMotor = new WPI_TalonSRX(RobotMap.CHAIN);
+	WPI_TalonSRX manipMotor = new WPI_TalonSRX(RobotMap.CHAIN);
 	WPI_TalonSRX arm = new WPI_TalonSRX(RobotMap.ARM);
 	
 	//Create limit switches
@@ -89,19 +85,6 @@ public class BoxManip implements Component
 			currentLocation = BOTTOM;
 		}
 		
-		//SOLENOIDS
-		//When the "B" button is pressed, the arms will release the box. Might need to change this once we know whether release is
-		//when the solenoid is true or false. Currently, we are assuming that the solenoid will release when it is false.
-		if(manipController.getRawButton(XboxMap.B)) 
-		{
-			armSolenoid.set(false);
-		}
-		//The solenoid's default state should always be closed, to hold onto the box.
-		else
-		{
-			armSolenoid.set(true);
-		}
-		
 //ARMS STOP MOVING WHEN THEY REACH THEIR DESTINATION
 		if(isTraveling)
 		{
@@ -135,7 +118,7 @@ public class BoxManip implements Component
 		}
 		
 		//Sets the speed of the motor
-		chainMotor.set(speed);
+		manipMotor.set(speed);
 	}
 	
 	public void autoUpdate()

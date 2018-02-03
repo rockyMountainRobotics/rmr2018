@@ -1,7 +1,5 @@
 package org.usfirst.frc.team662.robot;
 
-import java.util.ArrayList;
-
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -11,34 +9,40 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DriverStation;
-import com.armabot.*;
 
 public class Robot extends IterativeRobot {
     
-	public LiDARAutonmous theLiDARAutonmous;      
-    public XboxController xboxController;
+    WPI_TalonSRX leftFront;
+    WPI_TalonSRX leftBack;
+    WPI_TalonSRX rightFront;
+    WPI_TalonSRX rightBack;
+
+    SpeedControllerGroup leftDrive;
+    SpeedControllerGroup rightDrive;
+
+    DifferentialDrive differentialDrive;
+
+    XboxController xboxController;
 
     String side;
-    
-    ArrayList<Component> components;
- 	ArrayList<Component> disabled;
-    
-    public Robot()
-    {
-    	
-         
-        components.add(new Drive());
- 		//components.add(new Shifter());
-    }
-    
 	@Override
 	public void robotInit() 
 	{
 		side = DriverStation.getInstance().getGameSpecificMessage();
+		leftFront = new WPI_TalonSRX(RobotMap.LEFT_FRONT_MOTOR);
+		leftBack = new WPI_TalonSRX(RobotMap.LEFT_BACK_MOTOR);
+        rightFront = new WPI_TalonSRX(RobotMap.RIGHT_FRONT_MOTOR);
+        rightBack = new WPI_TalonSRX(RobotMap.RIGHT_BACK_MOTOR);
+
+        leftFront.setInverted(true);
+        leftBack.setInverted(true);
+        
+        leftDrive = new SpeedControllerGroup(leftFront, leftBack);
+        rightDrive = new SpeedControllerGroup(rightFront, rightBack);
+
+        differentialDrive = new DifferentialDrive(leftDrive, rightDrive);
 
         xboxController = new XboxController(0);
-        theLiDARAutonmous = new LiDARAutonmous();
-       
 	}
 	
 	public void teleopInt() {}
@@ -48,18 +52,34 @@ public class Robot extends IterativeRobot {
 	{
 		if (isOperatorControl() && isEnabled()) 
 		{
-			for(int i = 0; i < components.size(); i++)
+			char[] positions;
+			
+			//positions = side.toCharArray();
+			
+			//positions[0] = 'l';
+			
+			//SmartDashboard.putString("GAME_SIDE", Character.toString(positions[0]));
+			
+			
+			//differentialDriv;
+			differentialDrive.arcadeDrive(xboxController.getY(GenericHID.Hand.kLeft), -xboxController.getX(GenericHID.Hand.kLeft));
+			
+			char in = GetSide();
+			
+			if(in == 'L')
 			{
-				components.get(i).update();
+				leftFront.set(.5);
+				leftBack.set(.5);
+				SmartDashboard.putString("hi", "hi");
 			}
+			else 
+			{
+				rightFront.set(.5);
+				rightBack.set(.5);
+			}
+			
+			
 		}
-	}
-	
-	public void autonomousPeriodic() 
-	{
-		// originally copied from 2018 game data java code
-		theLiDARAutonmous.update();
-		
 	}
 
 }
