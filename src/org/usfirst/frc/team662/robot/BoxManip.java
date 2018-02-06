@@ -29,8 +29,6 @@ public class BoxManip implements Component
 	public DigitalInput limitSwitchMiddle = new DigitalInput(RobotMap.LIMIT_MIDDLE);
 	public DigitalInput limitSwitchBottom = new DigitalInput(RobotMap.LIMIT_BOTTOM);
 	
-	//Create x-box controller object
-	XboxController manipController = new XboxController(1);
 	
 	//Create an isTraveling boolean (true/false) variable
 	boolean isTraveling = false;
@@ -46,11 +44,11 @@ public class BoxManip implements Component
 		boolean middleLimit = !limitSwitchMiddle.get();
 		boolean bottomLimit = !limitSwitchBottom.get();
 		
-		double armSpeed = manipController.getRawAxis(5);
+		double armSpeed = RobotMap.MANIP_CONTROLLER.getRawAxis(5);
 		
 //MOVE ARMS ACCORDINGLY WHEN X, Y, OR A BUTTONS ARE PRESSED.		
 		//When the "Y" button is pressed and the arms aren't currently moving, move them to top.
-		if(manipController.getRawButton(XboxMap.Y) && currentLocation != TOP && !isTraveling)
+		if(RobotMap.MANIP_CONTROLLER.getRawButton(XboxMap.Y) && currentLocation != TOP && !isTraveling)
 		{
 			speed = SPEED;
 			isTraveling = true;
@@ -58,7 +56,7 @@ public class BoxManip implements Component
 		}
 		
 		//When "X" button is pressed and the arms aren't moving, move them to middle.
-		if(manipController.getRawButton(XboxMap.X)  && !isTraveling)
+		if(RobotMap.MANIP_CONTROLLER.getRawButton(XboxMap.X)  && !isTraveling)
 		{
 			//If you're currently at the top, move down.
 			if(currentLocation == TOP)
@@ -78,7 +76,7 @@ public class BoxManip implements Component
 		}
 				
 		//When the "A" button is pressed and the arms aren't currently moving, move them to bottom.
-		if(manipController.getRawButton(XboxMap.A) && currentLocation != BOTTOM && !isTraveling)
+		if(RobotMap.MANIP_CONTROLLER.getRawButton(XboxMap.A) && currentLocation != BOTTOM && !isTraveling)
 		{
 			speed = -SPEED;
 			isTraveling = true;

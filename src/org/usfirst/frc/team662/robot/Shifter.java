@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
 
-public class Shifter 
+public class Shifter implements Component
 {
 	public static final int SOLENOID_PORT = 0;
 	Solenoid solenoid = new Solenoid(SOLENOID_PORT);
@@ -12,9 +12,8 @@ public class Shifter
 	boolean past = false;
 	
 	
-	XboxController xboxController = new XboxController(0);
-	public void teleopPeriodic(){
-		current = xboxController.getRawButton(XboxMap.B);
+	public void update(){
+		current = RobotMap.DRIVE_CONTROLLER.getRawButton(XboxMap.B);
 		
 		if(current == true && past == false){
 			solenoid.set(!solenoid.get());
@@ -22,6 +21,14 @@ public class Shifter
 		SmartDashboard.putBoolean("High Gear", !solenoid.get());
 		past = current;
 	}
+
+
+	@Override
+	public void autoUpdate() {}
+
+
+	@Override
+	public void disable() {}
 	
 	
 }
