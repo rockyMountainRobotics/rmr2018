@@ -5,11 +5,11 @@ import edu.wpi.first.wpilibj.XboxController;
 public class RobotMap 
 {
 	
-	//Drive motor ports
-	public final static int RIGHT_FRONT_MOTOR = 6;
-	public final static int LEFT_FRONT_MOTOR = 7;
-	public final static int RIGHT_BACK_MOTOR = 5;
-	public final static int LEFT_BACK_MOTOR = 8;
+	//Drive motor ports.
+	public final static int RIGHT_FRONT_MOTOR = 5; //2018: 6    MOTO: 5
+	public final static int LEFT_FRONT_MOTOR = 6;  //2018: 7    MOTO: 6
+	public final static int RIGHT_BACK_MOTOR = 3;  //2018: 5    MOTO: 3
+	public final static int LEFT_BACK_MOTOR = 8;   //2018: 8    MOTO: 8
 	
 	//Manipulator motor ports
 	// Following value are TBD

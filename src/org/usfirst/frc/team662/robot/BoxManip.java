@@ -121,7 +121,24 @@ public class BoxManip implements Component
 	
 	public void autoUpdate()
 	{
-		//if(autoUpdateS.equalsIgnoreCase("d"))
+		switch (Robot.autoState)
+		{
+		//For first three cases, code is in Drive.
+		case 'a':
+			break;
+		case 'b':
+			break;
+		case 'c':
+			break;
+			
+		//Case D is the manipulator part, so it goes under BoxManip
+		case 'd':
+			//Manip Motor moves 
+			//TODO not correct 
+			manipMotor.set(.5);
+			break;
+		}
+	
 		//	{ make the arms put the box into the switch. The robot should be lined up with the wall.}
 		//autoUpdateS is located in Robot.
 	}

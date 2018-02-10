@@ -12,7 +12,7 @@ public class CompressorSwitch implements Component
 	{
 		//Turns the compressor on if the switch is on, and off if the switch is off
 		
-		System.out.println("compinput" + compressorInput.get());
+		//System.out.println("compinput" + compressorInput.get());
 		
 		if(!compressorInput.get())
 		{
