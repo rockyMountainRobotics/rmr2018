@@ -1,4 +1,5 @@
 package org.usfirst.frc.team662.robot;
+
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -12,8 +13,9 @@ public class Shifter implements Component
 	boolean past = false;
 	
 	
-	public void update(){
-		current = RobotMap.DRIVE_CONTROLLER.getRawButton(XboxMap.B);
+	public void update()
+	{
+		current = Robot.driveController.getRawButton(XboxMap.B);
 		
 		if(current == true && past == false){
 			solenoid.set(!solenoid.get());
@@ -24,11 +26,17 @@ public class Shifter implements Component
 
 
 	@Override
-	public void autoUpdate() {}
+	public void autoUpdate() 
+	{
+		
+	}
 
 
 	@Override
-	public void disable() {}
+	public void disable() 
+	{
+		
+	}
 	
 	
 }

@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class Drive implements Component{
 	
-	final double MULTIPLIER = .6;
+	final double MULTIPLIER = .4;
     WPI_TalonSRX leftFront;
     WPI_TalonSRX leftBack;
     WPI_TalonSRX rightFront;
@@ -20,7 +20,7 @@ public class Drive implements Component{
     
     DifferentialDrive differentialDrive;
     
-    public XboxController xboxController;
+    
 	
 	public Drive()
 	{
@@ -30,20 +30,21 @@ public class Drive implements Component{
 	    rightBack = new WPI_TalonSRX(RobotMap.RIGHT_BACK_MOTOR);
 	    
 	    leftFront.setInverted(true);
-        leftBack.setInverted(true);
+        leftBack.setInverted(true);	
         
         leftDrive = new SpeedControllerGroup(leftFront, leftBack);
         rightDrive = new SpeedControllerGroup(rightFront, rightBack);
 
         differentialDrive = new DifferentialDrive(leftDrive, rightDrive);
         
-        xboxController = new XboxController(0);
+        
 	}
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		differentialDrive.arcadeDrive(MULTIPLIER *(xboxController.getY(GenericHID.Hand.kLeft)), MULTIPLIER*( -xboxController.getX(GenericHID.Hand.kLeft)));
+		//differentialDrive.tankDrive(MULTIPLIER *(Robot.driveController.getY(GenericHID.Hand.kLeft)), MULTIPLIER*( Robot.driveController.getY(GenericHID.Hand.kLeft)));
+		differentialDrive.arcadeDrive(MULTIPLIER *(Robot.driveController.getY(GenericHID.Hand.kLeft)), MULTIPLIER*( -Robot.driveController.getX(GenericHID.Hand.kLeft)));
 	}
 
 	@Override
@@ -51,8 +52,10 @@ public class Drive implements Component{
 		// TODO Auto-generated method stub
 		String gameData;
 		
+		//Gets the game data from the game server, then stores it in gameData.
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		
+		//Checks whether gameData is left or right, and sets the motors accordingly.
 		if (gameData.charAt(0) == 'L')
 		{
 			// left motors
@@ -66,6 +69,17 @@ public class Drive implements Component{
 			rightFront.set(.5);
 			rightBack.set(.5);
 		}
+		
+		//When we are in the first state, (on the alliance wall area)
+		//if(autoUpdateS.equalsIgnoreCase("a"))
+		//	{ Turn the robot here, then change the case to "b"}
+		
+		//if(autoUpdateS.equalsIgnoreCase("b"))
+		//	{ Move the robot forward on the angle we turned until a certain lidar value is obtained}
+		//	then change to case "c"
+		
+		//if(autoUpdateS.equalsIgnoreCase("c"))
+		//	{turn the robot until it is parallel with the switch, then change the case to "d"}
 		
 	}
 
