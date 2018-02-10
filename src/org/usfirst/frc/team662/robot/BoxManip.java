@@ -44,11 +44,11 @@ public class BoxManip implements Component
 		boolean middleLimit = !limitSwitchMiddle.get();
 		boolean bottomLimit = !limitSwitchBottom.get();
 		
-		double armSpeed = RobotMap.MANIP_CONTROLLER.getRawAxis(5);
+		double armSpeed = Robot.driveController.getRawAxis(5);
 		
 //MOVE ARMS ACCORDINGLY WHEN X, Y, OR A BUTTONS ARE PRESSED.		
 		//When the "Y" button is pressed and the arms aren't currently moving, move them to top.
-		if(RobotMap.MANIP_CONTROLLER.getRawButton(XboxMap.Y) && currentLocation != TOP && !isTraveling)
+		if(Robot.driveController.getRawButton(XboxMap.Y) && currentLocation != TOP && !isTraveling)
 		{
 			speed = SPEED;
 			isTraveling = true;
@@ -56,7 +56,7 @@ public class BoxManip implements Component
 		}
 		
 		//When "X" button is pressed and the arms aren't moving, move them to middle.
-		if(RobotMap.MANIP_CONTROLLER.getRawButton(XboxMap.X)  && !isTraveling)
+		if(Robot.driveController.getRawButton(XboxMap.X)  && !isTraveling)
 		{
 			//If you're currently at the top, move down.
 			if(currentLocation == TOP)
@@ -76,7 +76,7 @@ public class BoxManip implements Component
 		}
 				
 		//When the "A" button is pressed and the arms aren't currently moving, move them to bottom.
-		if(RobotMap.MANIP_CONTROLLER.getRawButton(XboxMap.A) && currentLocation != BOTTOM && !isTraveling)
+		if(Robot.driveController.getRawButton(XboxMap.A) && currentLocation != BOTTOM && !isTraveling)
 		{
 			speed = -SPEED;
 			isTraveling = true;
@@ -121,7 +121,9 @@ public class BoxManip implements Component
 	
 	public void autoUpdate()
 	{
-		
+		//if(autoUpdateS.equalsIgnoreCase("d"))
+		//	{ make the arms put the box into the switch. The robot should be lined up with the wall.}
+		//autoUpdateS is located in Robot.
 	}
 	
 	public void disable()
